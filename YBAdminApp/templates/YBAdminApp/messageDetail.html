@@ -1,0 +1,151 @@
+{% include 'public/CommonHeaderScripts.html' %}
+{% load static %}
+<body class="layout layout-vertical layout-left-navigation layout-below-toolbar">
+<main>
+    <div id="wrapper">
+        {% include 'public/leftbar.html' %}
+        <div class="content-wrapper">
+            {% include 'public/topbar.html' %}
+
+            <div class="content custom-scrollbar">
+
+                <div class="doc forms-doc page-layout simple full-width">
+
+                    <!-- HEADER -->
+                    <div class="page-header bg-danger text-auto p-6 row no-gutters align-items-center justify-content-between">
+                        <h2 class="doc-title" id="content">Booking Status Detail</h2>
+
+                    </div>
+                    <!-- / HEADER -->
+
+                    <!-- CONTENT -->
+
+                    <div class="page-content p-6">
+                        <div class="content container">
+                            <div class="row">
+
+
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="example">
+                                        <div class="description">
+                                            <div class="description-text">
+                                                {% for bk in bookingList %}
+                                                <h5>Send Message</h5>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="container">
+                                            <div class="preview">
+                                                <div class="preview-elements">
+                                                    <form name="productForm" method="post"
+                                                          enctype="multipart/form-data"
+                                                          action="/YBAdminApp/messageSend" novalidate>
+                                                        {% csrf_token %}
+
+                                                        <input class="form-control" type="hidden"
+                                                               value="{{ bk.Id }}" id="BookingId" name="BookingId"/>
+
+                                                        <input class="form-control" type="hidden"
+                                                               value="{{ uid }}" id="FromID" name="FromID"/>
+
+                                                        <input class="form-control" type="hidden"
+                                                               value="{{ bk.UserId.Id }}" id="ToID" name="ToID"/>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input">Message From</label>
+                                                            <h4 id="example-text-input">{{ UserName }}</h4>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="example-text-input">Message To</label>
+                                                            <input type="text" id="example-text-input"
+                                                                   class="form-control" value="{{ bk.UserId.UserName }}"
+                                                                   readonly>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <textarea class="form-control"
+                                                                      id="exampleFormControlTextarea1"
+                                                                      name="MessageDetail" rows="5"></textarea>
+                                                            <label for="exampleFormControlTextarea1">Message
+                                                                Detail</label>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <button type="submit"
+                                                                    class="submit-button btn btn-danger btn-block"
+                                                                    style="display: block; margin: 0 auto;width: 50%">
+                                                                Submit
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="example">
+                                        <div class="description">
+                                            <div class="description-text">
+
+                                                <h5>Previous Message</h5>
+
+                                            </div>
+
+                                        </div>
+                                        {% for bk in messageList %}
+                                        <div class="container">
+                                            <div class="preview">
+                                                <div class="preview-elements">
+                                                    <div class="form-group">
+                                                        <label for="example-text-input">Message From</label>
+                                                        <h4 id="example-text-input">{{ bk.From__UserName }}</h4>
+                                                        {% for mk in mailBox %}
+                                                            {% if bk.Id == mk.InboxId__Id %}
+                                                                <div class="form-group">
+                                                                    <label for="example-text-input">Message</label>
+                                                                    <input type="text" id="example-text-input"
+                                                                           class="form-control" value="{{ mk.Message }}" readonly>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <script>
+
+
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+</body>
+
+
+<!-- Mirrored from fuse-bootstrap4-material.withinpixels.com/vertical-layout-below-toolbar-left-navigation/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 25 Apr 2018 07:04:03 GMT -->
+</html>

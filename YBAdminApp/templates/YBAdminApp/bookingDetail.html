@@ -1,0 +1,195 @@
+{% include 'public/CommonHeaderScripts.html' %}
+{% load static %}
+<style>
+
+
+.zoom:hover {
+
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  
+}
+</style>
+<body class="layout layout-vertical layout-left-navigation layout-below-toolbar">
+<main>
+    <div id="wrapper">
+        {% include 'public/leftbar.html' %}
+        <div class="content-wrapper">
+            {% include 'public/topbar.html' %}
+
+            <div class="content custom-scrollbar">
+
+                <div class="doc forms-doc page-layout simple full-width">
+
+                    <!-- HEADER -->
+                    <div class="page-header bg-danger text-auto p-6 row no-gutters align-items-center justify-content-between">
+                        <h2 class="doc-title" id="content">Booking Status Detail</h2>
+
+                    </div>
+                    <!-- / HEADER -->
+
+                    <!-- CONTENT -->
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Booking Status</h5>
+
+                            {% for bk in bookingList %}
+                        </div>
+                        <div class="card-body">
+                            <div class="container bookingForm">
+                                <form name="productForm" method="post"
+                                      enctype="multipart/form-data"
+                                      action="/YBAdminApp/bookingUpdate" novalidate>
+                                    {% csrf_token %}
+                                    <input class="form-control" type="hidden"
+                                           value="{{ bk.Id }}" id="BookingId" name="BookingId"/>
+                                    <div class="form-group">
+                                        <label for="example-text-input">User Id</label>
+                                        <h4 id="example-text-input">{{ bk.UserId__UserName }}</h4>
+                                        <h4 id="example-text-input">{{ bk.Remarks }}</h4>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" type="text"
+                                               value="{{ bk.ProductId__ProductName }}" id="example-search-input"/>
+                                        <label for="example-search-input">Product</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" type="number"
+                                               value="{{ bk.DepositAmount }}" id="example-email-input"/>
+                                        <label for="example-email-input">Deposit</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="example-url-EntryDate">Entry Date</label>
+                                        <h7 id="example-url-EntryDate">{{ bk.EntryDate }}</h7>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="example-url-EntryDate">Remarks</label>
+                                        <h7 id="example-url-EntryDate">{{ bk.Remarks }}</h7>
+                                    </div>
+
+                                    {% for bk in bookingPaySlipList %}
+                                    <div class="form-group">
+                                        <label for="example-url-Branch">Branch Name</label>
+                                        <h7 id="example-url-Branch">{{ bk.BranchName }}</h7>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="example-url-Branch">Pay Slip</label>
+                                        <img src="http://mis.digital:7779/PaySlip/{{ bk.PaySlipDoc }}" alt="Pay Slip" height="200" width="400" class="zoom">
+                                    </div>
+
+                                    {% endfor %}
+
+                                    {% for bk in RegisteredUserList %}
+                                    <div class="form-group">
+                                        <label for="example-url-Mobile">Mobile</label>
+                                        <h7 id="example-url-Mobile">{{ bk.Mobile }}</h7>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="example-url-Email">Email</label>
+                                        <h7 id="example-url-Email">{{ bk.Email }}</h7>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="example-url-District">District</label>
+                                        <h7 id="example-url-District">{{ bk.DistrictId__DistrictName }}</h7>
+                                    </div>
+
+                                    {% endfor %}
+
+                                    <div class="form-group" id="statusTag">
+                                        <label for="exampleFormControlSelect1">Take Action</label>
+                                        <select class="form-control" id="selectBookingStatus"
+                                                name="BookingStatus">
+                                                <option value="0">Select One</option>
+                                                <option value="Approve">Approve</option>
+                                                <option value="Revert">Revert</option>
+                                                <option value="Cancel">Cancel</option>
+                                                <option value="Pending">Pending</option>
+                                        </select>
+                                    </div>
+
+                                    <input class="form-control" type="hidden" value="{{ bk.BookingStatus }}" id="bookingStatusH"/>
+
+                                    <div class="form-group">
+                                        <button type="submit"
+                                                class="submit-button btn btn-danger btn-block"
+                                                style="display: block; margin: 0 auto;width: 50%">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+</body>
+<script type="text/javascript">
+
+
+
+    var options = '';
+    data_from_django = {{ dealerLocationList|safe }};
+
+
+
+    $(document).ready(function () {
+
+        var bookingStatus = $("#bookingStatusH").val();
+        console.log(bookingStatus);
+
+        if(bookingStatus=="Approve"){
+             $('.submit-button').prop("disabled", true);
+        }
+
+        $("#selectBookingStatus").change(function (event) {
+            console.log($(this).val());
+            if($(this).val()=="Approve" && bookingStatus!="Approve"){
+
+                options+='<div class="form-group delivery">'+
+                                        '<label for="example-url-Mobile">Delivery Date</label>'+
+                                        '<input class="form-control" type="date" name="DeliveryDate" value="2019-01-01"  id="example-email-input"/>'+
+                                    '</div>';
+                $('#statusTag').after(options);
+
+                dOption='<div class="form-group" id="districtTag"><label for="exampleFormControlSelect1">Select Delivery Point</label><select id="mySelect" name="DeliveryPoint">';
+                $.each(data_from_django, function(key, value) {
+
+                    for(i=1;i<=Object.keys(data_from_django).length;i++){
+                        dOption += '<option value='+data_from_django[i-1].Id+'>'+data_from_django[i-1].DealerCode +'-'+ data_from_django[i-1].DistrictId__DistrictName+'</option>';
+                    }
+
+                });
+                dOption+='</select></div>';
+                $('.delivery').after(dOption);
+            }
+
+            else{
+                $(".delivery").remove();
+                $("#mySelect").remove();
+                options = '';
+                dOption = '';
+            }
+
+        });
+
+    });
+
+</script>
+
+
+</html>

@@ -1,0 +1,127 @@
+{% include 'public/CommonHeaderScripts.html' %}
+{% load static %}
+<body class="layout layout-vertical layout-left-navigation layout-below-toolbar">
+<main>
+    <div id="wrapper">
+        {% include 'public/leftbar.html' %}
+        <div class="content-wrapper">
+            {% include 'public/topbar.html' %}
+
+            <div class="content custom-scrollbar">
+
+                <div class="doc forms-doc page-layout simple full-width">
+
+                    <!-- HEADER -->
+                    <div class="page-header bg-danger text-auto p-6 row no-gutters align-items-center justify-content-between">
+                        <h2 class="doc-title" id="content">Booking Status Detail</h2>
+
+                    </div>
+                    <!-- / HEADER -->
+
+                    <!-- CONTENT -->
+
+                    <div class="card">
+                        <div class="card-header">
+                            {% for pr in productList %}
+                            <h5>Product Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="container">
+                                <form name="productForm" method="post"
+                                      enctype="multipart/form-data"
+                                      action="/YBAdminApp/prUpdate" novalidate>
+                                    {% csrf_token %}
+                                    <input class="form-control" type="hidden"
+                                           value="{{ pr.Id }}" id="ProductId" name="ProductId"/>
+                                    <div class="form-group">
+                                        <label for="example-text-input">Product Name</label>
+                                        <input class="form-control" type="text"
+                                           value="{{ pr.ProductName }}" id="ProductName" name="ProductName"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" type="text"
+                                               value="{{ pr.ProductColor }}" id="ProductColor" name="ProductColor"/>
+                                        <label for="example-search-input">Product Color</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control"
+                                               value="{{ lastBDate }}"
+                                               type="date" name="productLastDate"
+                                               id="example-date-input-2"/>
+                                        <label for="example-date-input-2">Last Booking
+                                            Date</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" type="number"
+                                               value="{{ pr.ProductPrice }}" id="ProductPrice" name="ProductPrice"/>
+                                        <label for="example-email-input">Product Price</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" type="number"
+                                               value="{{ pr.MinBookingPrice }}" id="MinBookingPrice" name="MinBookingPrice"/>
+                                        <label for="example-email-input">Minimum Booking Price</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" type="number"
+                                               value="{{ pr.Stock }}" id="Stock" name="Stock"/>
+                                        <label for="example-email-input">Stock</label>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label for="example-url-Branch">Product Image</label>
+                                        <img src="{{ pr.ProductImage1 }}" alt="Product" height="200" width="400">
+                                        <input class="form-control" type="hidden"
+                                           value="{{ pr.ProductImage1 }}" id="prImage" name="prImage"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="imageFile1">Product
+                                            Image</label>
+                                        <input type="file" class="form-control-file"
+                                               id="imageFile1" name="productImage1">
+                                    </div>
+
+                                    <div class="checkbox">
+                                        <label><input class="form-control"
+                                                      type="checkbox" value="1" {% if pr.Status == '1' %} checked {% endif %}
+                                                      name="status" >
+                                            <span class="form-check-description">Booking Status</span>
+                                        </label>
+                                        <span class="checkbox-icon"></span>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <button type="submit"
+                                                class="submit-button btn btn-danger btn-block"
+                                                style="display: block; margin: 0 auto;width: 50%">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+</body>
+
+
+<!-- Mirrored from fuse-bootstrap4-material.withinpixels.com/vertical-layout-below-toolbar-left-navigation/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 25 Apr 2018 07:04:03 GMT -->
+</html>

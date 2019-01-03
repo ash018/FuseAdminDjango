@@ -1,0 +1,692 @@
+{% include 'public/CommonHeaderScripts.html' %}
+{% load staticfiles %}
+
+<body class="layout layout-vertical layout-left-navigation layout-below-toolbar">
+<main>
+    <div id="wrapper">
+        {% include 'public/leftbar.html' %}
+        <div class="content-wrapper">
+            {% include 'public/topbar.html' %}
+            <div class="content custom-scrollbar">
+
+                <div id="project-dashboard" class="page-layout simple right-sidebar">
+
+                    <div class="page-content-wrapper custom-scrollbar">
+
+                        <!-- HEADER -->
+                        <div class="page-header bg-danger text-auto d-flex flex-column justify-content-between px-8 pt-4 pb-0">
+
+                            <div class="row no-gutters align-items-start justify-content-between flex-nowrap">
+
+                                <div>
+                                    <span class="h2">Welcome back, {{ userId }}!</span>
+                                </div>
+
+                                <button type="button" class="sidebar-toggle-button btn btn-icon d-block d-xl-none"
+                                        data-fuse-bar-toggle="dashboard-project-sidebar" aria-label="Toggle sidebar">
+                                    <i class="icon icon-menu"></i>
+                                </button>
+                            </div>
+
+                            <div class="row no-gutters align-items-center project-selection">
+
+                                <div class="selected-project h6 px-4 py-2">Admin Panel</div>
+
+
+                            </div>
+
+                        </div>
+                        <!-- / HEADER -->
+
+                        <!-- CONTENT -->
+                        <div class="page-content">
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                                <li class="nav-item">
+                                    <a class="nav-link btn active" aria-expanded="true" id="home-tab" data-toggle="tab"
+                                       href="#home-tab-pane"
+                                       role="tab" aria-controls="home-tab-pane">Home</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link btn" id="budget-summary-tab" data-toggle="tab"
+                                       href="#budget-summary-tab-pane" role="tab"
+                                       aria-controls="budget-summary-tab-pane">Product For Booking</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link btn" id="product-list-tab" data-toggle="tab"
+                                       href="#product-list-tab-pane" role="tab" aria-controls="product-list-tab-pane">Product
+                                        List</a>
+                                </li>
+
+
+
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active p-3" id="home-tab-pane" role="tabpanel"
+                                     aria-labelledby="home-tab">
+
+                                    <!-- WIDGET GROUP -->
+                                    <div class="widget-group row no-gutters">
+
+                                        <!-- WIDGET 1 -->
+                                        <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                                            <div class="widget widget1 card">
+
+                                                <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                                                    <div class="col">
+                                                        <span class="h6">Booking</span>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-icon">
+                                                        <i class="icon icon-dots-vertical"></i>
+                                                    </button>
+
+                                                </div>
+
+                                                <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+
+                                                    <div class="title text-secondary">{{bookingCount}}</div>
+
+                                                    <div class="sub-title h6 text-muted">Total Booking</div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <!-- / WIDGET 1 -->
+
+                                        <!-- WIDGET 2 -->
+                                        <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                                            <div class="widget widget2 card">
+
+                                                <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                                                    <div class="col">
+                                                        <span class="h6">Pending</span>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-icon">
+                                                        <i class="icon icon-dots-vertical"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                                    <div class="title text-warning">{{pendingBookingCount}}</div>
+                                                    <div class="sub-title h6 text-muted">Pending Booking</div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <!-- / WIDGET 2 -->
+
+                                        <!-- WIDGET 3 -->
+                                        <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                                            <div class="widget widget3 card">
+
+                                                <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                                                    <div class="col">
+                                                        <span class="h6">Revert</span>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-icon">
+                                                        <i class="icon icon-dots-vertical"></i>
+                                                    </button>
+
+                                                </div>
+
+                                                <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                                    <div class="title text-danger">{{revertBookingCount}}</div>
+                                                    <div class="sub-title h6 text-muted">Revert Booking</div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                        <!-- / WIDGET 3 -->
+
+                                        <!-- WIDGET 4 -->
+                                        <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                                            <div class="widget widget4 card">
+
+                                                <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                                                    <div class="col">
+                                                        <span class="h6">Cancel</span>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-icon">
+                                                        <i class="icon icon-dots-vertical"></i>
+                                                    </button>
+
+                                                </div>
+
+                                                <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                                    <div class="title text-danger">{{cancelBookingCount}}</div>
+                                                    <div class="sub-title h6 text-muted">Cancelled Booking</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                                            <div class="widget widget4 card">
+
+                                                <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                                                    <div class="col">
+                                                        <span class="h6">Approved</span>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-icon">
+                                                        <i class="icon icon-dots-vertical"></i>
+                                                    </button>
+
+                                                </div>
+
+                                                <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                                    <div class="title text-info">{{approveBookingCount}}</div>
+                                                    <div class="sub-title h6 text-muted">Approved Booking</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- / WIDGET 4 -->
+
+                                        <!-- WIDGET 5 -->
+
+                                        <!-- / WIDGET 5 -->
+
+                                        <!-- WIDGET 6 -->
+
+                                        <!-- / WIDGET 6 -->
+
+                                        <!-- WIDGET 7 -->
+
+                                        <!-- / WIDGET 7 -->
+                                    </div>
+                                    <!-- / WIDGET GROUP -->
+                                </div>
+
+                                <div class="tab-pane fade p-3" id="budget-summary-tab-pane" role="tabpanel"
+                                     aria-labelledby="budget-summary-tab">
+
+                                    <!-- WIDGET GROUP -->
+                                    <div class="page-content p-8">
+
+                                        <div class="widget widget8 card">
+                                            <div class="col-12 col-lg-12 p-3">
+                                                <div class="example">
+                                                    <div class="description">
+                                                        <div class="description-text">
+                                                            <h5>Product Booking</h5>
+                                                        </div>
+                                                        <div class="toggle-source-preview">
+                                                            <i class="icon icon-code-tags"></i>
+                                                            <i class="icon icon-eye-outline"></i>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="source-preview-wrapper">
+                                                        <div class="preview">
+                                                            <div class="preview-elements">
+                                                                <form name="productForm" method="post"
+                                                                      enctype="multipart/form-data"
+                                                                      action="/YBAdminApp/product/" novalidate>
+                                                                    {% csrf_token %}
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control"
+                                                                               id="Product" name="productName"
+                                                                               placeholder="Enter Product Name">
+                                                                        <label for="stock">Product Name</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control"
+                                                                               id="ProductColor" name="productColor"
+                                                                               placeholder="Enter Product Color">
+                                                                        <label for="stock">Product Color</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="number" class="form-control"
+                                                                               id="stock" name="productStock"
+                                                                               placeholder="Enter Stock Count">
+                                                                        <label for="stock">Stock</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input class="form-control"
+                                                                               value="2019-01-01"
+                                                                               type="date" name="productActiveDate"
+                                                                               id="example-date-input"/>
+                                                                        <label for="example-date-input">Active
+                                                                            Date</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input class="form-control"
+                                                                               value="2019-01-01"
+                                                                               type="date" name="productLastDate"
+                                                                               id="example-date-input-2"/>
+                                                                        <label for="example-date-input-2">Last Booking
+                                                                            Date</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input class="form-control" type="number"
+                                                                               id="price" name="productPrice"/>
+                                                                        <label for="price">Product Price</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input class="form-control" type="number"
+                                                                               id="minprice"
+                                                                               name="productMinPrice"/>
+                                                                        <label for="minprice">Minimum Booking
+                                                                            Price</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label for="imageFile1">Product
+                                                                            Image</label>
+                                                                        <input type="file" class="form-control-file"
+                                                                               id="imageFile1" name="productImage1">
+                                                                    </div>
+
+                                                                    <div class="checkbox">
+                                                                        <label><input class="form-control"
+                                                                                      type="checkbox" value="1"
+                                                                                      name="status">
+                                                                            <span class="form-check-description">Booking Status</span>
+                                                                        </label>
+                                                                        <span class="checkbox-icon"></span>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <button type="submit"
+                                                                                class="submit-button btn btn-danger btn-block"
+                                                                                style="display: block; margin: 0 auto;width: 50%">
+                                                                            Submit
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- / WIDGET GROUP -->
+                                </div>
+
+
+                                <div class="tab-pane fade p-6" id="product-list-tab-pane" role="tabpanel"
+                                     aria-labelledby="product-list-tab">
+
+                                    <!-- WIDGET GROUP -->
+                                    <div class="widget-group row no-gutters">
+
+                                        <!-- WIDGET 1 -->
+                                        <div class="col-12">
+
+                                            <div class="card">
+
+                                                <div class="widget-header px-4 py-6 row no-gutters align-items-center justify-content-between">
+
+                                                    <div class="col">
+                                                        <span class="h5">Product List</span>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="divider"></div>
+
+                                                <div class="widget-content table-responsive">
+
+                                                    <table class="table">
+
+                                                        <thead>
+                                                        <tr>
+
+                                                            <th>SL</th>
+
+                                                            <th>Product Name</th>
+
+                                                            <th>Product Color</th>
+
+                                                            <th>Product Price</th>
+
+                                                            <th>Stock</th>
+
+                                                            <th>Entry Date</th>
+
+                                                            <th>Last Booking Date</th>
+
+                                                            <th>Action</th>
+
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+
+                                                        {% for pr in productList %}
+                                                        <tr>
+                                                            <td>{{forloop.counter}}</td>
+                                                            <td> {{pr.ProductName}}</td>
+                                                            <td> {{pr.ProductColor}}</td>
+                                                            <td> {{pr.ProductPrice}}</td>
+                                                            <td> {{pr.Stock}}</td>
+                                                            <td> {{pr.EntryDate}}</td>
+                                                            <td> {{pr.LastBookingDate}}</td>
+                                                            <td><a href="{{ pr.get_absolute_url }}"
+                                                                   class="btn btn-secondary" id="{{pr.Id}}">Edit</a>
+                                                            </td>
+
+                                                        </tr>
+
+                                                        {% endfor %}
+
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- WIDGET 1 -->
+
+                                        <div class="preview">
+                                            <div class="preview-elements">
+                                                <nav aria-label="...">
+                                                    {% if bookingList.has_other_pages %}
+                                                    <ul class="pagination">
+                                                        {% if bookingList.has_previous %}
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               href="?page={{ bookingList.previous_page_number }}">Previous</a>
+                                                        </li>
+                                                        {% endif %}
+
+                                                        {% for i in bookingList.paginator.page_range %}
+                                                        {% if bookingList.number == i %}
+                                                        <li class="page-item active">
+                                                            <a class="page-link" href="#">{{ i }}
+                                                                <span class="sr-only">(current)</span>
+                                                            </a>
+                                                        </li>
+                                                        {% else %}
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                                        </li>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                        {% if bookingList.has_next %}
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               href="?page={{ bookingList.next_page_number }}">Next</a>
+                                                        </li>
+                                                        {% else %}
+                                                        <li class="disabled"><span>&raquo;</span></li>
+                                                        {% endif %}
+                                                    </ul>
+                                                    {% endif %}
+                                                </nav>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <!-- / CONTENT -->
+
+                    </div>
+
+                    <aside class="page-sidebar custom-scrollbar" data-fuse-bar="dashboard-project-sidebar"
+                           data-fuse-bar-media-step="lg" data-fuse-bar-position="right">
+                        <!-- WIDGET GROUP -->
+                        <div class="widget-group">
+
+                            <!-- NOW WIDGET -->
+                            <div class="widget widget-now">
+
+                                <div class="widget-header row no-gutters align-items-center justify-content-between pl-4 py-4">
+
+                                    <div class="h6"></div>
+
+                                    <button type="button" class="btn btn-icon" aria-label="Options">
+                                        <i class="icon icon-dots-vertical"></i>
+                                    </button>
+                                </div>
+
+                                <div class="widget-content d-flex flex-column align-items-center justify-content-center p-4 pb-6">
+                                    <div class="month text-muted">{{ month }}</div>
+                                    <div class="day text-muted">{{ day }}</div>
+                                    <div class="year text-muted">{{ year }}</div>
+                                </div>
+
+                            </div>
+                            <!-- / NOW WIDGET -->
+
+                            <div class="divider"></div>
+
+                            <!-- WEATHER WIDGET -->
+                            <div class="widget widget-weather">
+
+                                <div class="widget- header row no-gutters align-items-center justify-content-between pl-4 py-4">
+
+
+                                    <button type="button" class="btn btn-icon" aria-label="Options">
+                                        <i class="icon icon-dots-vertical">Dhaka Weather</i>
+                                    </button>
+
+                                </div>
+
+                                <div class="d-flex flex-column align-items-center justify-content-center p-4 pb-8">
+
+                                    <div class="today-weather row no-gutters align-items-center justify-content-center">
+                                        <i class="icon-weather-pouring s-10 mr-4"></i>
+                                        <span class="h1">{{temp}}</span>
+                                        <span class="h1 text-muted">&deg;</span>
+                                        <span class="h1 text-muted">C</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="row no-gutters align-items-center justify-content-between p-4">
+
+                                    <div class="row no-gutters align-items-center">
+                                        <i class="icon-weather-windy icon mr-2 s-5"></i>
+                                        <span>12</span>
+                                        <span class="text-muted ml-1">KMH</span>
+                                    </div>
+
+                                    <div class="row align-items-center">
+                                        <i class="icon-compass-outline icon mr-2 s-5"></i>
+                                        <span>{{desc}}</span>
+                                    </div>
+
+                                    <div class="row no-gutters align-items-center">
+                                        <i class="icon-umbrella icon mr-2 s-5"></i>
+                                        <span>{{humidity}}%</span>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <!-- / WEATHER WIDGET -->
+
+                            <div class="divider"></div>
+                        </div>
+                        <!-- / WIDGET GROUP -->
+                    </aside>
+                </div>
+
+                <script type="text/javascript" src="../assets/js/apps/dashboard/project.js"></script>
+
+            </div>
+        </div>
+        <div class="quick-panel-sidebar custom-scrollbar" fuse-cloak data-fuse-bar="quick-panel-sidebar"
+             data-fuse-bar-position="right">
+            <div class="list-group" class="date">
+
+                <div class="list-group-item subheader">TODAY</div>
+
+                <div class="list-group-item two-line">
+
+                    <div class="text-muted">
+
+                        <div class="h1"> Saturday</div>
+
+                        <div class="h2 row no-gutters align-items-start">
+                            <span> 1</span>
+                            <span class="h6">th</span>
+                            <span> Jan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="list-group">
+
+                <div class="list-group-item subheader">Events</div>
+
+                <div class="list-group-item two-line">
+
+                    <div class="list-item-content">
+                        <h3>Group Meeting</h3>
+                        <p>In 32 Minutes, Room 1B</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item two-line">
+
+                    <div class="list-item-content">
+                        <h3>Public Beta Release</h3>
+                        <p>11:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item two-line">
+
+                    <div class="list-item-content">
+                        <h3>Dinner with David</h3>
+                        <p>17:30 PM</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item two-line">
+
+                    <div class="list-item-content">
+                        <h3>Q&amp;A Session</h3>
+                        <p>20:30 PM</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="list-group">
+
+                <div class="list-group-item subheader">Notes</div>
+
+                <div class="list-group-item two-line">
+
+                    <div class="list-item-content">
+                        <h3>Best songs to listen while working</h3>
+                        <p>Last edit: May 8th, 2015</p>
+                    </div>
+                </div>
+
+                <div class="list-group-item two-line">
+
+                    <div class="list-item-content">
+                        <h3>Useful subreddits</h3>
+                        <p>Last edit: January 12th, 2015</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="list-group">
+
+                <div class="list-group-item subheader">Quick Settings</div>
+
+                <div class="list-group-item">
+
+                    <div class="list-item-content">
+                        <h3>Notifications</h3>
+                    </div>
+
+                    <div class="secondary-container">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input"/>
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="list-group-item">
+
+                    <div class="list-item-content">
+                        <h3>Cloud Sync</h3>
+                    </div>
+
+                    <div class="secondary-container">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input"/>
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="list-group-item">
+
+                    <div class="list-item-content">
+                        <h3>Retro Thrusters</h3>
+                    </div>
+
+                    <div class="secondary-container">
+
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input"/>
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+</body>
+
+
+
+</html>
